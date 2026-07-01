@@ -1,0 +1,17 @@
+{
+  "name": "fardax-wabot",
+  "version": "2.0.0",
+  "description": "Fardax Store WhatsApp Bot — Notifikasi + Toko",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "@whiskeysockets/baileys": "^6.7.9",
+    "express": "^4.18.2",
+    "qrcode-terminal": "^0.12.0",
+    "pino": "^9.4.0",
+    "node-fetch": "^3.3.2"
+  }
+}
