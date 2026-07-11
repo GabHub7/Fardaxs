@@ -1,0 +1,93 @@
+# Render Blueprint — Fardax Store (web)
+# Deploy: render.com -> New -> Blueprint -> pilih repo ini -> Render baca
+# file ini otomatis dan bikinin service-nya.
+#
+# Bot WhatsApp & relay OkeConnect TETAP di Pterodactyl (tidak ikut pindah).
+# Env WHATSAPP_BOT_URL / OKECONNECT_PROXY_URL di bawah tetap menunjuk ke
+# server Pterodactyl yang sama seperti sekarang.
+
+services:
+  - type: web
+    name: fardaxs-web
+    runtime: node
+    plan: starter        # sesuaikan (starter cukup buat trafik kecil-menengah)
+    region: singapore     # region terdekat ke pengguna Indonesia
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /
+    autoDeploy: true      # auto-deploy tiap push ke branch main
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: 22.22.2
+
+      # ─── SUPABASE (isi manual di dashboard Render, jangan taruh di sini) ──
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        sync: false
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+
+      # ─── APP URL — isi setelah Render kasih tau domain *.onrender.com,
+      # atau domain custom kalau sudah dipasang ──
+      - key: NEXT_PUBLIC_APP_URL
+        sync: false
+
+      # ─── CRON SECRET ──
+      - key: CRON_SECRET
+        sync: false
+
+      # ─── UPSTASH REDIS (rate limiting) ──
+      - key: UPSTASH_REDIS_REST_URL
+        sync: false
+      - key: UPSTASH_REDIS_REST_TOKEN
+        sync: false
+
+      # ─── BOT WHATSAPP (tetap di Pterodactyl — isi alamat yang sama
+      # seperti sebelumnya, JANGAN diganti) ──
+      - key: WHATSAPP_BOT_URL
+        sync: false
+      - key: WHATSAPP_BOT_TOKEN
+        sync: false
+      - key: CS_PHONE
+        sync: false
+
+      # ─── OKECONNECT RELAY (tetap nunjuk ke bot di Pterodactyl) ──
+      - key: OKECONNECT_PROXY_URL
+        sync: false
+      - key: OKECONNECT_PROXY_SECRET
+        sync: false
+      - key: OKECONNECT_API_URL
+        sync: false
+      - key: OKECONNECT_MEMBER_ID
+        sync: false
+      - key: OKECONNECT_PIN
+        sync: false
+      - key: OKECONNECT_PASSWORD
+        sync: false
+
+      # ─── CASAKU (kalau tidak dikelola lewat Admin Panel -> Env Pembayaran) ──
+      - key: CASAKU_BASE_URL
+        sync: false
+      - key: CASAKU_LICENSE_KEY
+        sync: false
+      - key: CASAKU_QR_ID
+        sync: false
+      - key: CASAKU_WEBHOOK_SECRET
+        sync: false
+
+      # ─── OPSIONAL ──
+      - key: RESEND_API_KEY
+        sync: false
+      - key: RESEND_FROM_EMAIL
+        sync: false
+      - key: RESEND_FROM_NAME
+        sync: false
+      - key: SMM_PANEL_API_URL
+        sync: false
+      - key: SMM_PANEL_API_KEY
+        sync: false
+      - key: ENCRYPTION_KEY
+        sync: false
